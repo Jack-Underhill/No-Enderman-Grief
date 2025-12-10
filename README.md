@@ -6,6 +6,10 @@ Endermen can no longer pick up or place blocks, but creepers still explode, vill
 
 ---
 
+<img width="1536" height="1024" alt="No_Enderman_Grief_AspectVideo" src="https://github.com/user-attachments/assets/1fc9815b-32c1-4dbf-b5a9-91a0b8101209" />
+
+---
+
 ## Features
 
 - Prevents **only endermen** from changing blocks (both pickup and placement).
