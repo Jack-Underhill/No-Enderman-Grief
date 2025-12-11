@@ -112,7 +112,7 @@ Allows use of `/negreload`.
 
 This project uses Maven.
 ```bash
-git clone https://github.com/<your-username>/NoEndermanGrief.git
+git clone https://github.com/Jack-Underhill/No-Enderman-Grief.git
 cd NoEndermanGrief
 mvn package
 ```
