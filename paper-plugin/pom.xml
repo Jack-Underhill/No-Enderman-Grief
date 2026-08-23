@@ -38,6 +38,23 @@
     </dependencies>
 
     <build>
+        <resources>
+            <!-- Filter plugin.yml so its version stays in sync with <version> above -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <!-- Use Java 21 "release" flag -->
             <plugin>

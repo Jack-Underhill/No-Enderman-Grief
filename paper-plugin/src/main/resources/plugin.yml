@@ -1,5 +1,5 @@
 name: NoEndermanGrief
-version: '1.0.0'
+version: '${project.version}'
 main: me.jack.noendermangrief.NoEndermanGriefPlugin
 description: Prevents endermen from picking up or placing blocks while leaving other mob behavior vanilla.
 author: Jack Underhill

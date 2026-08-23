@@ -4,6 +4,7 @@ import me.jack.noendermangrief.NoEndermanGriefPlugin;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
@@ -22,7 +23,7 @@ public final class EndermanBlockListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEndermanChangeBlock(EntityChangeBlockEvent event) {
         // Fast-exit if the entity is not an enderman.
         if (event.getEntityType() != EntityType.ENDERMAN) {

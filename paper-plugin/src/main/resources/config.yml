@@ -15,7 +15,7 @@ worlds: {}
 
 logging:
   # If true, log whenever the plugin cancels an enderman block change.
-  enabled: true
+  enabled: false
 
   # If true, include a timestamp inside the message itself
   # (on top of the normal server log timestamp).

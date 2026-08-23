@@ -22,11 +22,15 @@ Endermen can no longer pick up or place blocks, but creepers still explode, vill
 
 ## Requirements
 
-- **Server:** Paper or Spigot (Paper recommended)
-- **Minecraft:** 1.21+
+- **Server:** Paper only. The jar is built Mojang-mapped, which relies on Paper's own remapping at load time — it will not load on vanilla Spigot.
+- **Minecraft:** 1.21.x
 - **Java:** 21
 
 This plugin is developed against the Paper 1.21 API with Mojang mappings.
+
+## Compatibility
+
+The plugin only uses long-stable Bukkit API (`EntityChangeBlockEvent`, `EntityType`, `JavaPlugin`, `FileConfiguration`), none of it Paper-version-specific, so it's expected to keep working unmodified across the 1.21.x line without needing a rebuild per patch release.
 
 ---
 
@@ -113,7 +117,7 @@ Allows use of `/negreload`.
 This project uses Maven.
 ```bash
 git clone https://github.com/Jack-Underhill/No-Enderman-Grief.git
-cd NoEndermanGrief
+cd No-Enderman-Grief/paper-plugin
 mvn package
 ```
 
@@ -126,7 +130,7 @@ Copy this JAR into your server’s plugins/ folder.
 
 ## How it works (technical overview)
 
- - The plugin registers a listener for EntityChangeBlockEvent.
+ - The plugin registers a listener for EntityChangeBlockEvent at `EventPriority.HIGH`, so protection plugins (e.g. WorldGuard) get to evaluate the event first, while `MONITOR`-priority observers still see the final outcome.
  - If the event’s entity type is ENDERMAN and the plugin is enabled in that world:
     - The event is cancelled so the block change does not occur.
     - If logging is enabled, a timestamped message with world and coordinates is written to the console.
