@@ -9,7 +9,10 @@ commands:
   negreload:
     description: Reload NoEndermanGrief configuration.
     usage: /negreload
-    permission: noendermangrief.reload
+    # Permission is checked manually in onCommand (with a custom denial
+    # message) rather than declared here, since declaring it here would
+    # make Bukkit auto-gate the command with its own generic message
+    # before onCommand ever runs.
 
 permissions:
   noendermangrief.reload:

@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
  * It must match the "main" value in plugin.yml:
  *   me.jack.noendermangrief.NoEndermanGriefPlugin
  */
-public final class NoEndermanGriefPlugin extends JavaPlugin {
+public class NoEndermanGriefPlugin extends JavaPlugin {
 
     // Formatter for the optional timestamp we include in log messages.
     private static final DateTimeFormatter LOG_TIMESTAMP_FORMAT =
