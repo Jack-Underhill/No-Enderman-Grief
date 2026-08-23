@@ -7,6 +7,9 @@ target/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 
+# === Fabric Loom dev run directory (world saves, logs, local config) ===
+run/
+
 # === IntelliJ IDEA ===
 .idea/
 *.iml

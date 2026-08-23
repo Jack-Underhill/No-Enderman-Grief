@@ -1,0 +1,9 @@
+{
+	"required": true,
+	"package": "me.jack.noendermangrief.fabric.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": ["EndermanTakeBlockGoalMixin", "EndermanLeaveBlockGoalMixin"],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
