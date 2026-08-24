@@ -8,9 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * Targets the private inner class net.minecraft.world.entity.monster.EnderMan$EndermanTakeBlockGoal,
  * which governs enderman block pickup. canUse() already gates on the mobGriefing gamerule and a
@@ -20,8 +17,6 @@ import java.time.format.DateTimeFormatter;
 @Mixin(targets = "net/minecraft/world/entity/monster/EnderMan$EndermanTakeBlockGoal")
 public abstract class EndermanTakeBlockGoalMixin {
 
-    private static final DateTimeFormatter LOG_TIMESTAMP_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
     @Shadow
     private EnderMan enderman;
 
@@ -29,18 +24,7 @@ public abstract class EndermanTakeBlockGoalMixin {
     private void noEndermanGrief$preventPickup(CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ() && NoEndermanGriefMod.getConfig().enabled) {
             cir.setReturnValue(false);
-
-            if (NoEndermanGriefMod.getConfig().loggingEnabled) {
-                StringBuilder message = new StringBuilder("[EndermanBlocked] ");
-                if (NoEndermanGriefMod.getConfig().loggingIncludeTimestamp) {
-                    message.append(LocalDateTime.now().format(LOG_TIMESTAMP_FORMAT)).append(" - ");
-                }
-                message.append("Prevented enderman block pickup in ")
-                        .append(this.enderman.level().dimension().location())
-                        .append(" near ")
-                        .append(this.enderman.blockPosition());
-                NoEndermanGriefMod.LOGGER.info(message.toString());
-            }
+            NoEndermanGriefMod.announceBlocked(this.enderman, "pickup");
         }
     }
 }
