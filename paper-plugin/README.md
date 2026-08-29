@@ -1,49 +1,34 @@
 # NoEndermanGrief
 
-**NoEndermanGrief** is a lightweight Paper/Spigot plugin that completely disables enderman block griefing while keeping all other mob behavior vanilla.
+Every mob can be spawn-proofed and optimized around — except endermen. They teleport straight through spawn-proofing into hidden pockets (deep underground, inside your own base), and the moment one picks up a block, it sticks around far longer than it should, quietly eating into your mob cap and tanking spawn rates on any mob farm nearby. Run a base with several farms, and endermen are the one mob you can't design around — no matter how well everything else is optimized. (And yes, they also just grief your builds overnight.)
 
-Endermen can no longer pick up or place blocks, but creepers still explode, villagers still farm, and the `mobGriefing` gamerule remains under your control.
-
----
-
-<img width="1536" height="1024" alt="No_Enderman_Grief_AspectVideo" src="https://github.com/user-attachments/assets/1fc9815b-32c1-4dbf-b5a9-91a0b8101209" />
-
----
+**NoEndermanGrief** fixes that at the source: endermen simply can't pick up or place blocks anymore, full stop. Unlike turning off the `mobGriefing` gamerule, this doesn't touch anything else — creepers still explode, villagers still farm, silverfish still infest. Only endermen are affected.
 
 ## Features
 
-- Prevents **only endermen** from changing blocks (both pickup and placement).
-- Does **not** modify the global `mobGriefing` gamerule.
-- Per-world enable/disable via `config.yml`.
-- Optional console logging with timestamps and coordinates whenever an enderman block change is cancelled.
-- Minimal surface area: one admin-only reload command, no changes for regular players.
-
----
+- Endermen can't pick up or place blocks anymore — pickup *and* placement, both blocked.
+- No more block-holding endermen surviving indefinitely in hidden pockets, eating into your mob cap and dragging down mob farm spawn rates.
+- The global `mobGriefing` gamerule is never touched, so every other mob behaves exactly as vanilla intends.
+- Enable or disable it per world, if you want different behavior in the Nether, the End, or specific worlds.
+- Optional logging (with timestamps and coordinates) if you want a record of what got blocked.
+- One admin-only command to reload settings without restarting the server — nothing changes for regular players.
 
 ## Requirements
 
-- **Server:** Paper only. The jar is built Mojang-mapped, which relies on Paper's own remapping at load time — it will not load on vanilla Spigot.
+- **Server:** Paper. (Not Spigot or Bukkit — the jar is built Mojang-mapped, which relies on Paper's own remapping at load time and won't load on either.)
 - **Minecraft:** 1.21.x
 - **Java:** 21
 
-This plugin is developed against the Paper 1.21 API with Mojang mappings.
-
-## Compatibility
-
-The plugin only uses long-stable Bukkit API (`EntityChangeBlockEvent`, `EntityType`, `JavaPlugin`, `FileConfiguration`), none of it Paper-version-specific, so it's expected to keep working unmodified across the 1.21.x line without needing a rebuild per patch release.
-
----
+The plugin only calls long-stable Bukkit API (`EntityChangeBlockEvent`, `EntityType`, `JavaPlugin`, `FileConfiguration`) — nothing Paper-version-specific — so it's expected to keep working unmodified across the whole 1.21.x line without needing a rebuild per patch release.
 
 ## Installation
 
-1. Download the latest release JAR from the [Releases](./releases) page or build it with Maven (see below).
-2. Place the JAR into your server’s `plugins/` folder.
-3. Start (or restart) your Paper/Spigot server.
-4. Run `/plugins` in game or in the console and verify that **NoEndermanGrief** is listed and enabled.
+1. Download the jar (see [Building from source](#building-from-source) below, or grab a release from [Modrinth](https://modrinth.com/plugin/no-enderman-grief-2025)).
+2. Drop it into your server's `plugins/` folder.
+3. Restart your server.
+4. That's it — endermen are already blocked from griefing. Run `/plugins` to confirm **NoEndermanGrief** is listed and enabled.
 
-On first run, the plugin will create a `NoEndermanGrief` folder inside `plugins/` with a default `config.yml`.
-
----
+The first time it runs, the plugin creates a `plugins/NoEndermanGrief/config.yml` with sensible defaults. You don't need to touch it unless you want to change something.
 
 ## Configuration
 
@@ -72,10 +57,10 @@ logging:
   include-timestamp: true
 ```
 
-## Per-world control
+### Per-world control
 
- - If a world is not listed under `worlds`, `default-enabled` determines whether the plugin is active there.
- - If a world is listed under `worlds`, that value overrides `default-enabled`:
+- If a world isn't listed under `worlds`, `default-enabled` decides whether the plugin is active there.
+- If a world *is* listed under `worlds`, that value overrides `default-enabled` for just that world:
 
 ```yaml
 worlds:
@@ -84,15 +69,12 @@ worlds:
   world_the_end: true
 ```
 
-In this example, the plugin is:
+In this example: enabled in `world` and `world_the_end`, disabled in `world_nether`.
 
- - Enabled in `world` and `world_the_end`.
- - Disabled in `world_nether`.
+### Logging
 
-## Logging
-
- - `logging.enabled: true` – log a line each time an enderman block change is cancelled.
- - `logging.include-timestamp: true` – include an ISO-8601 timestamp in the log message.
+- `logging.enabled: true` — log a line each time an enderman block change is cancelled.
+- `logging.include-timestamp: true` — include an ISO-8601 timestamp in the log message.
 
 Example log entry:
 
@@ -100,40 +82,35 @@ Example log entry:
 [NoEndermanGrief] [EndermanBlocked] 2025-01-01T12:34:56 - Cancelled enderman block change in world 'world' at (10, 64, -30)
 ```
 
-## Commands
+## Commands & permission
 
-Reloads `config.yml` from disk (without restarting the world / server).
-
- - `/negreload`
-
-## Permission
-Allows use of `/negreload`.
-
- - `noendermangrief.reload`
-   - Default: `op`
+| Command | Does | Permission | Default |
+|---|---|---|---|
+| `/negreload` | Reloads `config.yml` from disk, no restart needed | `noendermangrief.reload` | `op` |
 
 ## Building from source
 
 This project uses Maven.
+
 ```bash
 git clone https://github.com/Jack-Underhill/No-Enderman-Grief.git
 cd No-Enderman-Grief/paper-plugin
 mvn package
 ```
 
-The compiled plugin JAR will be located in the target/ directory:
-```text
-target/no-enderman-grief-1.0.0-SNAPSHOT.jar
-```
+The compiled jar lands at `target/no-enderman-grief-1.0.0-SNAPSHOT.jar` — copy it into your server's `plugins/` folder.
 
-Copy this JAR into your server’s plugins/ folder.
+Automated tests (MockBukkit-based) run as part of the same `mvn package`, or on their own via `mvn test`.
 
-## How it works (technical overview)
+<details>
+<summary><b>How it works (technical overview)</b></summary>
 
- - The plugin registers a listener for EntityChangeBlockEvent at `EventPriority.HIGH`, so protection plugins (e.g. WorldGuard) get to evaluate the event first, while `MONITOR`-priority observers still see the final outcome.
- - If the event’s entity type is ENDERMAN and the plugin is enabled in that world:
-    - The event is cancelled so the block change does not occur.
-    - If logging is enabled, a timestamped message with world and coordinates is written to the console.
- - No other entity types are modified, so creepers, villagers, and other mobs behave as in vanilla.
+- The plugin registers a listener for `EntityChangeBlockEvent` at `EventPriority.HIGH`, so protection plugins (e.g. WorldGuard) get to evaluate the event first, while `MONITOR`-priority observers still see the final outcome.
+- If the event's entity type is `ENDERMAN` and the plugin is enabled in that world:
+  - The event is cancelled, so the block change never happens.
+  - If logging is enabled, a timestamped message with world and coordinates is written to the console.
+- No other entity types are touched, so creepers, villagers, and every other mob behave exactly as in vanilla.
 
-This makes the plugin safe to drop into existing survival worlds where you want to preserve terrain from enderman griefing without affecting any other mechanics.
+This makes the plugin safe to drop into an existing survival world where you want to preserve terrain from enderman griefing without affecting anything else.
+
+</details>
