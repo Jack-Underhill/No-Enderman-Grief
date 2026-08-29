@@ -29,3 +29,6 @@ Thumbs.db
 
 # === Logs / misc ===
 *.log
+
+# === Personal ===
+local/
