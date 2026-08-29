@@ -1,6 +1,6 @@
-package me.jack.noendermangrief;
+package noendermangrief;
 
-import me.jack.noendermangrief.listener.EndermanBlockListener;
+import noendermangrief.listener.EndermanBlockListener;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  *
  * This class is created and managed by the Paper/Spigot server.
  * It must match the "main" value in plugin.yml:
- *   me.jack.noendermangrief.NoEndermanGriefPlugin
+ *   noendermangrief.NoEndermanGriefPlugin
  */
 public class NoEndermanGriefPlugin extends JavaPlugin {
 

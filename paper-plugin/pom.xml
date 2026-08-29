@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Coordinates / identity of your plugin artifact -->
-    <groupId>me.jack</groupId>
+    <groupId>noendermangrief</groupId>
     <artifactId>no-enderman-grief</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>NoEndermanGrief</name>

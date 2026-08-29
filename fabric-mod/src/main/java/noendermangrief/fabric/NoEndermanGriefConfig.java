@@ -1,4 +1,4 @@
-package me.jack.noendermangrief.fabric;
+package noendermangrief.fabric;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

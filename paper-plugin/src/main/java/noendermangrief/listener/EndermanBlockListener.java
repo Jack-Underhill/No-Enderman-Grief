@@ -1,6 +1,6 @@
-package me.jack.noendermangrief.listener;
+package noendermangrief.listener;
 
-import me.jack.noendermangrief.NoEndermanGriefPlugin;
+import noendermangrief.NoEndermanGriefPlugin;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;

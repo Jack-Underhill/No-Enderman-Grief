@@ -1,4 +1,4 @@
-package me.jack.noendermangrief.fabric;
+package noendermangrief.fabric;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.ChatFormatting;

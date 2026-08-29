@@ -1,6 +1,6 @@
-package me.jack.noendermangrief.fabric.mixin;
+package noendermangrief.fabric.mixin;
 
-import me.jack.noendermangrief.fabric.NoEndermanGriefMod;
+import noendermangrief.fabric.NoEndermanGriefMod;
 import net.minecraft.world.entity.monster.EnderMan;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
