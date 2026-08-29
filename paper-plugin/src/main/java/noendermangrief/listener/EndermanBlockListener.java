@@ -1,6 +1,7 @@
 package noendermangrief.listener;
 
 import noendermangrief.NoEndermanGriefPlugin;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -41,9 +42,11 @@ public final class EndermanBlockListener implements Listener {
         // Cancel the block change: enderman cannot pick up or place a block.
         event.setCancelled(true);
 
-        // Optional debug logging.
+        // Optional debug logging. Enderman block-change events always go either to air
+        // (pickup) or from air to a block (placement), so getTo() tells us which.
         if (plugin.isLoggingEnabled()) {
-            plugin.logEndermanBlockCancel(block);
+            String action = event.getTo() == Material.AIR ? "pickup" : "placement";
+            plugin.logEndermanBlockCancel(block, action);
         }
     }
 }

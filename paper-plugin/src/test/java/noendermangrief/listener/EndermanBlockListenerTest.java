@@ -41,20 +41,24 @@ class EndermanBlockListenerTest {
         MockBukkit.unmock();
     }
 
-    private EntityChangeBlockEvent fireBlockChangeEvent(EntityType entityType) {
+    private EntityChangeBlockEvent fireBlockChangeEvent(EntityType entityType, Material to) {
         Entity entity = mock(Entity.class);
         when(entity.getType()).thenReturn(entityType);
 
         BlockMock block = world.getBlockAt(10, 64, -30);
-        EntityChangeBlockEvent event = new EntityChangeBlockEvent(entity, block, Material.AIR.createBlockData());
+        EntityChangeBlockEvent event = new EntityChangeBlockEvent(entity, block, to.createBlockData());
 
         server.getPluginManager().callEvent(event);
         return event;
     }
 
+    private EntityChangeBlockEvent firePickupEvent(EntityType entityType) {
+        return fireBlockChangeEvent(entityType, Material.AIR);
+    }
+
     @Test
     void endermanBlockChange_isCancelled_whenWorldEnabled() {
-        EntityChangeBlockEvent event = fireBlockChangeEvent(EntityType.ENDERMAN);
+        EntityChangeBlockEvent event = firePickupEvent(EntityType.ENDERMAN);
 
         assertTrue(event.isCancelled());
     }
@@ -63,35 +67,45 @@ class EndermanBlockListenerTest {
     void endermanBlockChange_isNotCancelled_whenWorldDisabled() {
         plugin.getConfig().set("default-enabled", false);
 
-        EntityChangeBlockEvent event = fireBlockChangeEvent(EntityType.ENDERMAN);
+        EntityChangeBlockEvent event = firePickupEvent(EntityType.ENDERMAN);
 
         assertFalse(event.isCancelled());
     }
 
     @Test
     void nonEndermanBlockChange_isNotTouched() {
-        EntityChangeBlockEvent event = fireBlockChangeEvent(EntityType.SILVERFISH);
+        EntityChangeBlockEvent event = firePickupEvent(EntityType.SILVERFISH);
 
         assertFalse(event.isCancelled());
     }
 
     @Test
-    void loggingEnabled_logsCancelMessage() {
+    void loggingEnabled_logsPickupMessage() {
         plugin.getConfig().set("logging.enabled", true);
         List<LogRecord> records = captureLogRecords();
 
-        fireBlockChangeEvent(EntityType.ENDERMAN);
+        firePickupEvent(EntityType.ENDERMAN);
 
-        assertTrue(records.stream().anyMatch(r -> r.getMessage().contains("[EndermanBlocked]")));
+        assertTrue(records.stream().anyMatch(r -> r.getMessage().equals("Denied pickup at (10, 64, -30).")));
+    }
+
+    @Test
+    void loggingEnabled_logsPlacementMessage() {
+        plugin.getConfig().set("logging.enabled", true);
+        List<LogRecord> records = captureLogRecords();
+
+        fireBlockChangeEvent(EntityType.ENDERMAN, Material.DIRT);
+
+        assertTrue(records.stream().anyMatch(r -> r.getMessage().equals("Denied placement at (10, 64, -30).")));
     }
 
     @Test
     void loggingDisabled_doesNotLog() {
         List<LogRecord> records = captureLogRecords();
 
-        fireBlockChangeEvent(EntityType.ENDERMAN);
+        firePickupEvent(EntityType.ENDERMAN);
 
-        assertTrue(records.stream().noneMatch(r -> r.getMessage().contains("[EndermanBlocked]")));
+        assertTrue(records.isEmpty());
     }
 
     private List<LogRecord> captureLogRecords() {

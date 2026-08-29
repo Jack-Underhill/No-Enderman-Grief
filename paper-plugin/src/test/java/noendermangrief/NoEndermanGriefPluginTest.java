@@ -57,9 +57,4 @@ class NoEndermanGriefPluginTest {
     void isLoggingEnabled_reflectsConfigDefaultFalse() {
         assertFalse(plugin.isLoggingEnabled());
     }
-
-    @Test
-    void isTimestampEnabled_defaultTrue() {
-        assertTrue(plugin.isTimestampEnabled());
-    }
 }

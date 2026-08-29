@@ -16,7 +16,6 @@ public final class NoEndermanGriefConfig {
 
     public boolean enabled = true;
     public boolean loggingEnabled = false;
-    public boolean loggingIncludeTimestamp = true;
 
     public static NoEndermanGriefConfig load() {
         if (Files.exists(CONFIG_PATH)) {

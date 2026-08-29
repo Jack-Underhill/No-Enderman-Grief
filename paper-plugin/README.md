@@ -10,7 +10,7 @@ Every mob can be spawn-proofed and optimized around — except endermen. They te
 - No more block-holding endermen surviving indefinitely in hidden pockets, eating into your mob cap and dragging down mob farm spawn rates.
 - The global `mobGriefing` gamerule is never touched, so every other mob behaves exactly as vanilla intends.
 - Enable or disable it per world, if you want different behavior in the Nether, the End, or specific worlds.
-- Optional logging (with timestamps and coordinates) if you want a record of what got blocked.
+- Optional logging (with coordinates) if you want a record of what got blocked.
 - One admin-only command to reload settings without restarting the server — nothing changes for regular players.
 
 ## Requirements
@@ -49,12 +49,8 @@ default-enabled: true
 worlds: {}
 
 logging:
-  # If true, log whenever the plugin cancels an enderman block change.
+  # If true, log whenever the plugin denies an enderman block pickup/placement.
   enabled: false
-
-  # If true, include a timestamp inside the message itself
-  # (on top of the normal server log timestamp).
-  include-timestamp: true
 ```
 
 ### Per-world control
@@ -73,14 +69,13 @@ In this example: enabled in `world` and `world_the_end`, disabled in `world_neth
 
 ### Logging
 
-- `logging.enabled: true` — log a line each time an enderman block change is cancelled.
-- `logging.include-timestamp: true` — include an ISO-8601 timestamp in the log message.
-
-Example log entry:
+`logging.enabled: true` — log a line each time an enderman's pickup or placement is denied. Bukkit already prefixes console output with the plugin name and a timestamp, so the message itself stays short:
 
 ```text
-[NoEndermanGrief] [EndermanBlocked] 2025-01-01T12:34:56 - Cancelled enderman block change in world 'world' at (10, 64, -30)
+[NoEndermanGrief] Denied pickup at (10, 64, -30).
 ```
+
+This matches the message the [Fabric mod](../fabric-mod/) shows in chat, if you use both.
 
 ## Commands & permission
 
@@ -108,7 +103,7 @@ Automated tests (MockBukkit-based) run as part of the same `mvn package`, or on 
 - The plugin registers a listener for `EntityChangeBlockEvent` at `EventPriority.HIGH`, so protection plugins (e.g. WorldGuard) get to evaluate the event first, while `MONITOR`-priority observers still see the final outcome.
 - If the event's entity type is `ENDERMAN` and the plugin is enabled in that world:
   - The event is cancelled, so the block change never happens.
-  - If logging is enabled, a timestamped message with world and coordinates is written to the console.
+  - If logging is enabled, a short message with the coordinates is written to the console.
 - No other entity types are touched, so creepers, villagers, and every other mob behave exactly as in vanilla.
 
 This makes the plugin safe to drop into an existing survival world where you want to preserve terrain from enderman griefing without affecting anything else.

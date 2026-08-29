@@ -7,9 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * Main plugin entry point.
  *
@@ -18,10 +15,6 @@ import java.time.format.DateTimeFormatter;
  *   noendermangrief.NoEndermanGriefPlugin
  */
 public class NoEndermanGriefPlugin extends JavaPlugin {
-
-    // Formatter for the optional timestamp we include in log messages.
-    private static final DateTimeFormatter LOG_TIMESTAMP_FORMAT =
-            DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     @Override
     public void onEnable() {
@@ -70,34 +63,13 @@ public class NoEndermanGriefPlugin extends JavaPlugin {
     }
 
     /**
-     * Whether to include a timestamp inside the log message itself.
+     * Logs that an enderman's block pickup or placement was denied. Bukkit's logger already
+     * prefixes console output with "[NoEndermanGrief]" and its own timestamp, so the message
+     * itself stays short.
      */
-    public boolean isTimestampEnabled() {
-        return getConfig().getBoolean("logging.include-timestamp", true);
-    }
-
-    /**
-     * Logs a message indicating an enderman block change was cancelled,
-     * including world and coordinates, and optionally a timestamp.
-     */
-    public void logEndermanBlockCancel(Block block) {
-        String worldName = block.getWorld().getName();
+    public void logEndermanBlockCancel(Block block, String action) {
         String coords = block.getX() + ", " + block.getY() + ", " + block.getZ();
-
-        StringBuilder message = new StringBuilder("[EndermanBlocked] ");
-
-        if (isTimestampEnabled()) {
-            String timestamp = LocalDateTime.now().format(LOG_TIMESTAMP_FORMAT);
-            message.append(timestamp).append(" - ");
-        }
-
-        message.append("Cancelled enderman block change in world '")
-               .append(worldName)
-               .append("' at (")
-               .append(coords)
-               .append(')');
-
-        getLogger().info(message.toString());
+        getLogger().info("Denied " + action + " at (" + coords + ").");
     }
 
     /**

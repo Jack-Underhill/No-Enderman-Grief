@@ -21,14 +21,12 @@ Enderman block pickup and placement are each governed by a private AI goal insid
 ```json
 {
   "enabled": true,
-  "loggingEnabled": false,
-  "loggingIncludeTimestamp": true
+  "loggingEnabled": false
 }
 ```
 
 - `enabled` — whether enderman block pickup/placement is prevented.
-- `loggingEnabled` — announce every prevented pickup/placement: a detailed line to the log file, and a short, color-coded message in chat (e.g. `[NoEndermanGrief] Denied pickup near (10, -60, -13)`) so it's visible without checking logs.
-- `loggingIncludeTimestamp` — include a timestamp inside the *log file* line (chat messages don't need one — chat already shows when a message arrived).
+- `loggingEnabled` — announce every prevented pickup/placement, both in the log file and as a short, color-coded chat message (e.g. `[NoEndermanGrief] Denied pickup at (10, -60, -13).`), so it's visible without checking logs.
 
 There's no per-world setting (unlike the Paper plugin) — singleplayer doesn't have Bukkit's multi-world-folder concept, so a single global toggle covers it. There's also no in-game reload command in this version; edit the file and restart, or add one later via Fabric's command registration if that turns out to matter in practice.
 
@@ -44,7 +42,7 @@ No MockBukkit-equivalent testing framework exists for Mixin-based mods at this s
 - [ ] Confirm enderman block placement is also prevented (endermen only place a block they're already carrying — you may need `/summon` with an NBT `carried_block` tag, or wait for a natural pickup to be prevented first and test placement separately by temporarily setting `enabled: false`, letting one pick up a block, then re-enabling and confirming it never places it).
 - [ ] Set `enabled: false` in `config/no-enderman-grief.json`, restart — confirm vanilla griefing behavior resumes.
 - [ ] Confirm other `mobGriefing`-gated behavior is unaffected: creepers still destroy terrain, villagers still farm.
-- [ ] With `loggingEnabled: true`, confirm a color-coded message appears in chat and a matching detailed line appears in the log file (`logs/latest.log`) for each prevented pickup/placement; with `false`, confirm both stay silent.
+- [ ] With `loggingEnabled: true`, confirm a color-coded message appears in chat and the same message appears in the log file (`logs/latest.log`) for each prevented pickup/placement; with `false`, confirm both stay silent.
 
 ## Building from source
 
