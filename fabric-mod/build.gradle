@@ -2,7 +2,9 @@ plugins {
 	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 }
 
-version = project.mod_version
+// Release version by default (plain `./gradlew build`). For a dev build with a
+// qualifier, pass -PversionSuffix=-SNAPSHOT on the command line.
+version = project.mod_version + (project.findProperty('versionSuffix') ?: '')
 group = project.maven_group
 
 dependencies {
