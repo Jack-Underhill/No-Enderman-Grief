@@ -93,7 +93,7 @@ cd No-Enderman-Grief/paper-plugin
 mvn package
 ```
 
-The compiled jar lands at `target/no-enderman-grief-paper-1.0.0.jar` — copy it into your server's `plugins/` folder.
+The compiled jar lands at `target/NoEndermanGrief-mc_1.21-paper-1.0.0.jar` — copy it into your server's `plugins/` folder.
 
 Automated tests (MockBukkit-based) run as part of the same `mvn package`, or on their own via `mvn test`.
 

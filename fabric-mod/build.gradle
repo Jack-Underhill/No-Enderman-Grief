@@ -7,6 +7,11 @@ plugins {
 version = project.mod_version + (project.findProperty('versionSuffix') ?: '')
 group = project.maven_group
 
+// NoEndermanGrief-mc_<mc version>-fabric-<version>[-SNAPSHOT]
+base {
+	archivesName = "NoEndermanGrief-mc_${project.minecraft_version}-fabric"
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

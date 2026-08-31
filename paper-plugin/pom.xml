@@ -17,6 +17,7 @@
         <!-- Release version by default (plain `mvn package`). For a dev build with a
              qualifier, override on the command line: mvn package -Drevision=1.0.0-SNAPSHOT -->
         <revision>1.0.0</revision>
+        <minecraft.version>1.21</minecraft.version>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -61,6 +62,8 @@
     </dependencies>
 
     <build>
+        <!-- NoEndermanGrief-mc_<mc version>-paper-<version>[-SNAPSHOT] -->
+        <finalName>NoEndermanGrief-mc_${minecraft.version}-paper-${revision}</finalName>
         <resources>
             <!-- Filter plugin.yml so its version stays in sync with <version> above -->
             <resource>

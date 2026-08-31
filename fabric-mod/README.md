@@ -52,4 +52,4 @@ cd No-Enderman-Grief/fabric-mod
 ./gradlew build
 ```
 
-The built jar will be in `build/libs/`.
+The built jar lands at `build/libs/NoEndermanGrief-mc_1.21-fabric-1.0.0.jar`.
