@@ -62,8 +62,8 @@
     </dependencies>
 
     <build>
-        <!-- NoEndermanGrief-mc_<mc version>-paper-<version>[-SNAPSHOT] -->
-        <finalName>NoEndermanGrief-mc_${minecraft.version}-paper-${revision}</finalName>
+        <!-- EndermanGriefControl-mc_<mc version>-paper-<version>[-SNAPSHOT] -->
+        <finalName>EndermanGriefControl-mc_${minecraft.version}-paper-${revision}</finalName>
         <resources>
             <!-- Filter plugin.yml so its version stays in sync with <version> above -->
             <resource>
