@@ -1,87 +1,101 @@
-# Modrinth listing draft — combined project (Paper + Fabric)
+# Modrinth listing draft
 
-Draft copy for the consolidated listing at https://modrinth.com/plugin/no-enderman-grief-2025 (now hosts both the Paper plugin and the Fabric mod as separate versions in one project) — paste/adapt into Modrinth's editor, don't upload this file itself.
+Draft copy for the consolidated listing at https://modrinth.com/plugin/no-enderman-grief-2025 (hosts both the Paper plugin and the Fabric mod as separate versions in one project) — mirrors what's live as of 2026-09-05. Paste/adapt into Modrinth's editor, don't upload this file itself.
 
-**Title:** No Enderman Grief
+**Title:** Enderman Grief Control
 
 **Summary** (short tagline field):
-> Stops endermen from picking up or placing blocks — on Paper servers or in Fabric singleplayer/servers — so they stop tanking your mob farm spawn rates. Every other mob behaves exactly as vanilla.
+> Stop Endermen from stealing and placing blocks without disabling mobGriefing: no world grief, no new persistent block-carrying Endermen.
 
 **Description** (long-form field, below):
 
 ---
 
-**Every mob can be spawn-proofed and optimized around — except endermen.**
+Enderman Grief Control stops Endermen from picking up or placing blocks without disabling `mobGriefing` for the rest of your world.
 
-They teleport straight through spawn-proofing into hidden pockets (deep underground, inside player bases), and the moment one picks up a block, it sticks around far longer than it should, quietly eating into the mob cap and tanking spawn rates on any mob farm nearby. Run a base with several farms, and endermen are the one mob nobody can design around — no matter how well everything else is optimized. (And yes, they also just grief builds overnight.)
+It affects only Endermen, preventing new persistent block-carrying Endermen while leaving other vanilla mob behavior unchanged.
 
-No Enderman Grief fixes that at the source: endermen simply can't pick up or place blocks anymore, full stop. Unlike turning off the `mobGriefing` gamerule, this doesn't touch anything else — creepers still explode, villagers still farm, silverfish still infest. Only endermen are affected.
+## Why use Enderman Grief Control?
 
-## Which download do you need?
+- **Endermen only:** Keep the fix focused on the mob causing the problem.
+- **Pickup and placement blocked:** Prevent Endermen from taking blocks or placing carried blocks back into the world.
+- **No global gamerule tradeoff:** Leave `mobGriefing` enabled for farms, villagers, sheep, and other mechanics that rely on it.
+- **Persistent carrier prevention:** Stop new block-carrying Endermen from being created and building up over time.
 
-This project covers both platforms — pick the version tagged for yours below:
+*(Enabled/Disabled comparison screenshots go here on the live listing.)*
 
-- **Running a Paper server?** Grab a `Paper-*` version.
-- **Playing singleplayer, or running a Fabric server?** Grab a `Fabric-*` version.
+## Which download do I need?
 
-Both do exactly the same thing — same behavior, same config philosophy — just built for different platforms, since a Bukkit/Paper plugin can't run in vanilla singleplayer (no plugin API exists there) and a Fabric mod can't run as a server plugin.
+Enderman Grief Control has separate builds for **Paper** and **Fabric**. Choose the file that matches your setup.
 
-## Paper plugin
+| Your setup | Use |
+|---|---|
+| **Paper** server | **Paper** version |
+| **Fabric** server | **Fabric** version |
+| **Fabric** singleplayer | **Fabric** version |
 
-### Features
+Use the Versions tab to download the build that matches your Minecraft version.
 
-- Endermen simply can't pick up or place blocks anymore. That's it.
-- No more block-holding endermen surviving indefinitely in hidden pockets, dragging down your mob farm spawn rates.
-- Everything else about mob griefing stays vanilla.
-- Turn it on or off per world, if you want endermen to behave differently in the Nether or your Overworld.
-- Optional logging, if you want a record of what got blocked and when.
-- One admin command to reload settings without restarting your server.
+## Platform features
 
-### Requirements
+### Paper
 
-- Paper server (Spigot/Bukkit/Purpur are not supported — this plugin needs Paper specifically)
-- Minecraft 1.21.x
-- Java 21
+- Per-world configuration
+- Runtime configuration reload
+- Optional event logging
 
-### Installation
+### Fabric
 
-1. Download a `Paper-*` version below.
-2. Drop it into your server's `plugins/` folder.
-3. Restart your server.
-4. Done — endermen are already blocked from griefing. No further setup needed.
+- Singleplayer and dedicated server support
+- Optional logging
+- No Fabric API required
 
-### Configuring it (optional)
+## Installation
 
-Everything works out of the box with sensible defaults. If you want to fine-tune it — turning it off in specific worlds, or turning on logging — a `config.yml` is created automatically in `plugins/NoEndermanGrief/` the first time the plugin runs. Full details on every option are in the [GitHub README](https://github.com/Jack-Underhill/No-Enderman-Grief/blob/master/paper-plugin/README.md).
+### Paper
 
-## Fabric mod
+1. Download the **Paper** version from the Versions tab.
+2. Place the `.jar` file in your server's `plugins` folder.
+3. Restart the server.
 
-### Features
+### Fabric
 
-- Endermen simply can't pick up or place blocks anymore. That's it.
-- No more block-holding endermen surviving indefinitely in hidden pockets, dragging down your mob farm spawn rates.
-- Everything else about mob griefing stays vanilla.
-- Optional logging in chat and the log file, if you want to know what got blocked and when.
-- No other mods required — this works entirely on its own.
+1. Install **Fabric Loader** for your Minecraft version.
+2. Download the **Fabric** version from the Versions tab.
+3. Place the `.jar` file in your `mods` folder.
+4. Launch the game or server.
 
-### Requirements
+**Fabric API is not required.**
 
-- Fabric Loader (0.19.3 or newer)
-- Minecraft 1.21
-- Java 21
-- No Fabric API needed — this mod doesn't depend on it
+## Configuration
 
-### Installation
+Enderman Grief Control works out of the box with its default settings. Configuration is only needed if you want to customize its behavior.
 
-1. Download a `Fabric-*` version below.
-2. Drop it into your `.minecraft/mods/` folder (or your Fabric server's `mods/` folder).
-3. Launch the game.
-4. Done — endermen are already blocked from griefing. No further setup needed.
+### Paper
 
-### Configuring it (optional)
+Configuration is located at: `plugins/NoEndermanGrief/config.yml`
 
-Everything works out of the box with sensible defaults. If you want to turn on logging, a config file is created automatically at `config/no-enderman-grief.json` the first time the mod runs. Full details are in the [GitHub README](https://github.com/Jack-Underhill/No-Enderman-Grief/blob/master/fabric-mod/README.md).
+After making changes, reload the configuration with the plugin's reload command or restart the server.
 
-## Source & issues
+### Fabric
 
-Source code, build instructions, and issue tracker: https://github.com/Jack-Underhill/No-Enderman-Grief
+Configuration is located at: `config/no-enderman-grief.json`
+
+After making changes, restart the game or server for them to take effect.
+
+For a full reference of available configuration options, see the [GitHub documentation](https://github.com/Jack-Underhill/No-Enderman-Grief).
+
+## Compatibility
+
+- **Paper:** Supports `Paper` servers only. `Bukkit`, `Spigot`, and `Purpur` are not officially supported.
+- **Fabric:** Requires `Fabric Loader` and works in both singleplayer and on dedicated servers.
+- Supported Minecraft versions are listed on the Versions tab for each release.
+
+## Source, bugs, and feedback
+
+Enderman Grief Control is open source under the **Apache 2.0 License**.
+
+- [View the source code on GitHub](https://github.com/Jack-Underhill/No-Enderman-Grief)
+- [Report a bug or request a feature](https://github.com/Jack-Underhill/No-Enderman-Grief/issues)
+
+Bug reports and feedback are welcome.
